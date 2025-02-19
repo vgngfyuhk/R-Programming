@@ -1,0 +1,13 @@
+library(dplyr)
+library(tidyr)
+
+data("iris")
+
+iris1 <- iris  
+iris1$Sepal.Length.Cate <- cut(iris$Sepal.Length, breaks = quantile(iris$Sepal.Length, probs = seq(0, 1, 0.25)), include.lowest = TRUE)  
+
+pivot_table <- iris1 %>%
+  count(Species, Sepal.Length.Cate) %>%
+  pivot_wider(names_from = Sepal.Length.Cate, values_from = n, values_fill = 0)
+
+print(pivot_table)
