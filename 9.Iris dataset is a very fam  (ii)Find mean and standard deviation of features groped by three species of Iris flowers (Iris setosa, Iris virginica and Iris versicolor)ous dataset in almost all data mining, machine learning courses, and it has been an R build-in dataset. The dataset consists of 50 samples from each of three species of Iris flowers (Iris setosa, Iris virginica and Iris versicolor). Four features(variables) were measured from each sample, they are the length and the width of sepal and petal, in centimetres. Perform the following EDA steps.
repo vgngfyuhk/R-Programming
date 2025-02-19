@@ -1,0 +1,4 @@
+data("iris")  
+
+print(aggregate(. ~ Species, data = iris, FUN = mean))  
+print(aggregate(. ~ Species, data = iris, FUN = sd))  
