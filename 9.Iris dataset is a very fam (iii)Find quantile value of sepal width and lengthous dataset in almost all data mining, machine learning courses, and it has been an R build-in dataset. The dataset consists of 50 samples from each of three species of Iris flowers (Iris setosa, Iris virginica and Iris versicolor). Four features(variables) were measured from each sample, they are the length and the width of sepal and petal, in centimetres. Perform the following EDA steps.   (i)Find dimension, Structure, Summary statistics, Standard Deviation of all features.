@@ -1,0 +1,4 @@
+data("iris")  
+
+print(quantile(iris$Sepal.Length))  
+print(quantile(iris$Sepal.Width))  
