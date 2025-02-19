@@ -1,0 +1,6 @@
+data("iris")  
+
+iris1 <- iris  
+iris1$Sepal.Length.Cate <- cut(iris$Sepal.Length, breaks = quantile(iris$Sepal.Length, probs = seq(0, 1, 0.25)), include.lowest = TRUE)  
+
+print(aggregate(cbind(Sepal.Width, Petal.Length, Petal.Width) ~ Species + Sepal.Length.Cate, data = iris1, FUN = mean))  
