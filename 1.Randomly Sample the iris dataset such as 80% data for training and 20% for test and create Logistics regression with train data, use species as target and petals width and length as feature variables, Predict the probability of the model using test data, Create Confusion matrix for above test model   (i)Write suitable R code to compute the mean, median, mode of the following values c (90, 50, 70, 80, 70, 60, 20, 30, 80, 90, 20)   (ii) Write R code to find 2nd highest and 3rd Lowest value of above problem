@@ -1,0 +1,18 @@
+library(datasets)
+library(caret)
+
+data(iris)
+iris_data <- iris[, c("Petal.Length", "Petal.Width", "Species")]
+iris_data$Species <- ifelse(iris_data$Species == "setosa", 1, 0)
+
+set.seed(123)
+train_index <- createDataPartition(iris_data$Species, p=0.8, list=FALSE)
+train_data <- iris_data[train_index, ]
+test_data <- iris_data[-train_index, ]
+
+model <- glm(Species ~ Petal.Length + Petal.Width, data=train_data, family=binomial)
+pred_probs <- predict(model, test_data, type="response")
+pred_labels <- ifelse(pred_probs > 0.5, 1, 0)
+
+conf_matrix <- table(Predicted = pred_labels, Actual = test_data$Species)
+print(conf_matrix)
