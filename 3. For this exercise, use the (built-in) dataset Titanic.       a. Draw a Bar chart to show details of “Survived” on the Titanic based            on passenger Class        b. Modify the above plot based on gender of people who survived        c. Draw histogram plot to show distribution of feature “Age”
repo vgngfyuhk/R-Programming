@@ -1,0 +1,16 @@
+data("Titanic")
+titanic_df <- as.data.frame(Titanic)
+
+library(ggplot2)
+
+ggplot(titanic_df, aes(x = Class, y = Freq, fill = Survived)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Survival Based on Passenger Class", x = "Class", y = "Count") +
+  theme_minimal()
+
+ggplot(titanic_df, aes(x = Class, y = Freq, fill = interaction(Survived, Sex))) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Survival Based on Class and Gender", x = "Class", y = "Count") +
+  theme_minimal()
+
+hist(titanic_df$Age, main = "Age Distribution on Titanic", xlab = "Age", col = "lightblue", breaks = 10)
