@@ -1,0 +1,16 @@
+data(airquality)
+
+missing_percent <- colSums(is.na(airquality)) / nrow(airquality) * 100
+
+for (col in names(airquality)) {
+  if (missing_percent[col] > 0 && missing_percent[col] < 10) {
+    airquality <- airquality[!is.na(airquality[[col]]), ]
+  } else if (missing_percent[col] >= 10) {
+    airquality[[col]][is.na(airquality[[col]])] <- mean(airquality[[col]], na.rm = TRUE)
+  }
+}
+
+model <- lm(Ozone ~ Solar.R, data = airquality)
+
+plot(airquality$Solar.R, airquality$Ozone, xlab = "Solar Radiation", ylab = "Ozone", main = "Scatter Plot with Regression Line")
+abline(model, col = "red", lwd = 2)
