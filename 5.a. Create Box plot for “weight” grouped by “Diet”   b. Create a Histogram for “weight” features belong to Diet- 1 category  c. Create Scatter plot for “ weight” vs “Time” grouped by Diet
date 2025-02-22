@@ -1,0 +1,12 @@
+data(ChickWeight)
+
+boxplot(weight ~ Diet, data = ChickWeight, main = "Box Plot of Weight by Diet", xlab = "Diet", ylab = "Weight", col = "lightblue")
+
+hist(ChickWeight$weight[ChickWeight$Diet == 1], main = "Histogram of Weight for Diet 1", xlab = "Weight", col = "lightgreen", breaks = 10)
+
+library(ggplot2)
+
+ggplot(ChickWeight, aes(x = Time, y = weight, color = as.factor(Diet))) +
+  geom_point() +
+  labs(title = "Scatter Plot of Weight vs Time by Diet", x = "Time", y = "Weight", color = "Diet") +
+  theme_minimal()
