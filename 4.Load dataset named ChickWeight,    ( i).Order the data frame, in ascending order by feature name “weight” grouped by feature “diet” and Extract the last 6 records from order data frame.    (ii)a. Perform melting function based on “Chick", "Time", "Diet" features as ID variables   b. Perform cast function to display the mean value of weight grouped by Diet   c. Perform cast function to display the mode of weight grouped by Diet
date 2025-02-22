@@ -1,0 +1,17 @@
+data(ChickWeight)
+
+ordered_data <- ChickWeight[order(ChickWeight$Diet, ChickWeight$weight), ]
+tail_records <- tail(ordered_data, 6)
+print(tail_records)
+
+library(reshape2)
+
+molten_data <- melt(ChickWeight, id.vars = c("Chick", "Time", "Diet"))
+print(molten_data)
+
+mean_weight <- dcast(molten_data, Diet ~ variable, mean, na.rm = TRUE)
+print(mean_weight)
+
+mode_func <- function(x) { as.numeric(names(sort(table(x), decreasing = TRUE)[1])) }
+mode_weight <- dcast(molten_data, Diet ~ variable, mode_func, na.rm = TRUE)
+print(mode_weight)
