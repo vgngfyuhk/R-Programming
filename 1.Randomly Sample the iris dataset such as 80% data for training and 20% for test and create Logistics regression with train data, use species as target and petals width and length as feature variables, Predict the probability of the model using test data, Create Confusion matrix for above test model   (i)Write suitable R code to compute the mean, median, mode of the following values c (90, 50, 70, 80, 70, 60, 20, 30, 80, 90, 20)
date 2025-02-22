@@ -1,0 +1,19 @@
+library(caret)
+
+data(iris)
+
+iris <- iris[iris$Species != "setosa", ]
+iris$Species <- as.factor(ifelse(iris$Species == "versicolor", 1, 0))
+
+set.seed(123)
+trainIndex <- createDataPartition(iris$Species, p = 0.8, list = FALSE)
+trainData <- iris[trainIndex, ]
+testData <- iris[-trainIndex, ]
+
+model <- glm(Species ~ Petal.Length + Petal.Width, data = trainData, family = binomial)
+
+predicted_probs <- predict(model, newdata = testData, type = "response")
+predicted_classes <- ifelse(predicted_probs > 0.5, 1, 0)
+
+conf_matrix <- table(Predicted = predicted_classes, Actual = testData$Species)
+print(conf_matrix)
