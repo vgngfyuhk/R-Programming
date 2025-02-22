@@ -1,0 +1,30 @@
+data(airquality)
+
+mean_temp <- sum(airquality$Temp, na.rm = TRUE) / length(na.omit(airquality$Temp))
+cat("Mean Temperature:", mean_temp, "\n")
+
+head_rows <- head(airquality, 5)
+print(head_rows)
+
+subset_data <- airquality[, !(names(airquality) %in% c("Temp", "Wind"))]
+print(subset_data)
+
+coldest_day <- airquality[which.min(airquality$Temp), ]
+print(coldest_day)
+
+summary_stats <- summary(airquality)
+print(summary_stats)
+
+library(reshape2)
+
+molten_data <- melt(airquality)
+print(molten_data)
+
+molten_id <- melt(airquality, id.vars = c("Month", "Day"))
+print(molten_id)
+
+casted_data <- dcast(molten_id, Month + Day ~ variable, mean, na.rm = TRUE)
+print(casted_data)
+
+monthly_avg <- dcast(molten_id, Month ~ variable, mean, na.rm = TRUE)
+print(monthly_avg)
